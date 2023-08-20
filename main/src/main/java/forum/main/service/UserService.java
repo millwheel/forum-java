@@ -1,6 +1,6 @@
 package forum.main.service;
 
-import forum.main.Repository.SpringDataDynamoUserRepository;
+import forum.main.repository.SpringDataDynamoUserRepository;
 import forum.main.entity.User;
 import org.springframework.stereotype.Service;
 
