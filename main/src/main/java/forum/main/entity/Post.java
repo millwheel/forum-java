@@ -1,20 +1,17 @@
 package forum.main.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
-    @Id
-    private long userId;
-    private String username;
-    private List<String> keywordList;
+public class Post {
+
+    private long postId;
+    private String content;
+
 }

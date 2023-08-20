@@ -19,12 +19,12 @@ public class UserService {
     public long createUser(String username, List<String> keywordList){
         User user = new User();
         SecureRandom secureRandom = new SecureRandom();
-        int randomId = secureRandom.nextInt();
-        user.setId(randomId);
+        long randomLong = Integer.toUnsignedLong(secureRandom.nextInt());
+        user.setUserId(randomLong);
         user.setUsername(username);
         user.setKeywordList(keywordList);
         User save = repository.save(user);
-        return save.getId();
+        return save.getUserId();
     }
 
     public Optional<User> readUser(long id){
