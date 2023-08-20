@@ -3,9 +3,10 @@ package forum.main.configuration;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.rds.AmazonRDS;
-import com.amazonaws.services.rds.AmazonRDSClientBuilder;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.amazonaws.auth.AWSCredentials;
 
@@ -19,7 +20,6 @@ public class AwsConfig {
     @Value("${aws.region}")
     private String awsRegion;
 
-
     public AWSCredentials awsCredentials() {
         return new BasicAWSCredentials(awsAccessKey, awsSecretKey);
     }
@@ -28,8 +28,10 @@ public class AwsConfig {
         return new AWSStaticCredentialsProvider(awsCredentials());
     }
 
-    public AmazonRDS amazonRDS(){
-        return AmazonRDSClientBuilder.standard().withCredentials(awsCredentialsProvider())
+    @Bean
+    public AmazonDynamoDB amazonDynamoDB() {
+        return AmazonDynamoDBClientBuilder.standard().withCredentials(awsCredentialsProvider())
                 .withRegion(awsRegion).build();
     }
+
 }

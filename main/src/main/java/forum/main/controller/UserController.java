@@ -6,7 +6,6 @@ import forum.main.entity.User;
 import forum.main.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 public class UserController {

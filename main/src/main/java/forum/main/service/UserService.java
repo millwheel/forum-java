@@ -1,6 +1,6 @@
 package forum.main.service;
 
-import forum.main.Repository.SpringDataRdsUserRepository;
+import forum.main.Repository.SpringDataDynamoUserRepository;
 import forum.main.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private final SpringDataRdsUserRepository repository;
+    private final SpringDataDynamoUserRepository repository;
 
-    public UserService(SpringDataRdsUserRepository repository) {
+    public UserService(SpringDataDynamoUserRepository repository) {
         this.repository = repository;
     }
 
