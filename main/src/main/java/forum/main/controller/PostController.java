@@ -1,12 +1,11 @@
 package forum.main.controller;
 
 
+import forum.main.dto.PostRequestDto;
 import forum.main.dto.PostResponseDto;
+import forum.main.entity.Post;
 import forum.main.service.PostService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PostController {
@@ -17,13 +16,14 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/post")
-    public void getPost(){
-
+    @PostMapping("/post")
+    public void createPost(@RequestBody PostRequestDto postRequestDto){
+        postService.createPost(postRequestDto.getUserId(), postRequestDto.getContent(), postRequestDto.getTagList());
     }
 
-    @PostMapping("/post")
-    public void createPost(@RequestBody PostResponseDto postResponseDto){
-
+    @GetMapping("/post")
+    public PostResponseDto getPost(@RequestParam long postId){
+        Post post = postService.readPost(postId).orElseGet(null);
+        return new PostResponseDto(post);
     }
 }

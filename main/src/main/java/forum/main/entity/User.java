@@ -10,8 +10,6 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @DynamoDBTable(tableName = "forum_user")
 public class User {
 
@@ -21,4 +19,10 @@ public class User {
     private String username;
     @DynamoDBAttribute
     private List<String> tagList;
+
+    public User(long userId, String username, List<String> tagList) {
+        this.userId = userId;
+        this.username = username;
+        this.tagList = tagList;
+    }
 }

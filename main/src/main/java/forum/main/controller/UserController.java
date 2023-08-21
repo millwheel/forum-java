@@ -19,7 +19,7 @@ public class UserController {
     @GetMapping
     public UserResponseDto getUser(@RequestParam long id){
         User user = userService.readUser(id).orElseGet(null);
-        return new UserResponseDto(user.getUsername(), user.getTagList());
+        return new UserResponseDto(user);
     }
 
 

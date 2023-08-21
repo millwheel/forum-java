@@ -17,12 +17,9 @@ public class UserService {
     }
 
     public long createUser(String username, List<String> keywordList){
-        User user = new User();
         SecureRandom secureRandom = new SecureRandom();
-        long randomLong = Integer.toUnsignedLong(secureRandom.nextInt());
-        user.setUserId(randomLong);
-        user.setUsername(username);
-        user.setKeywordList(keywordList);
+        long userId = Integer.toUnsignedLong(secureRandom.nextInt());
+        User user = new User(userId, username, keywordList);
         User save = repository.save(user);
         return save.getUserId();
     }
