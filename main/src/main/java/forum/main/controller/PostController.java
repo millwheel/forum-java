@@ -8,6 +8,7 @@ import forum.main.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/post")
 public class PostController {
 
     private final PostService postService;
@@ -16,14 +17,14 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping("/post")
+    @PostMapping
     public void createPost(@RequestBody PostRequestDto postRequestDto){
         postService.createPost(postRequestDto.getUserId(), postRequestDto.getContent(), postRequestDto.getTagList());
     }
 
-    @GetMapping("/post")
+    @GetMapping
     public PostResponseDto getPost(@RequestParam long postId){
-        Post post = postService.readPost(postId).orElseGet(null);
+        Post post = postService.readPost(postId).orElse(null);
         return new PostResponseDto(post);
     }
 }
