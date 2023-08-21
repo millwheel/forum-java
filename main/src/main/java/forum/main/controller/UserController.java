@@ -7,7 +7,7 @@ import forum.main.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController
+@RestController("/user")
 public class UserController {
 
     private final UserService userService;
@@ -16,14 +16,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user")
+    @GetMapping
     public UserResponseDto getUser(@RequestParam long id){
         User user = userService.readUser(id).orElseGet(null);
-        return new UserResponseDto(user.getUsername(), user.getKeywordList());
+        return new UserResponseDto(user.getUsername(), user.getTagList());
     }
 
 
-    @PostMapping("/user")
+    @PostMapping
     public long createUser(@RequestBody UserRequestDto userRequestDto){
         return userService.createUser(userRequestDto.getUsername(), userRequestDto.getKeywordList());
     }

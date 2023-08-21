@@ -1,12 +1,7 @@
 package forum.main.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
 
-@Getter
-@Setter
 public class UserResponseDto {
     private String username;
     private List<String> keywordList;
