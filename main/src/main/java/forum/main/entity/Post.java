@@ -12,13 +12,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@DynamoDBTable(tableName = "forum_user")
-public class User {
+@DynamoDBTable(tableName = "forum_post")
+public class Post {
 
     @DynamoDBHashKey
-    private long userId;
+    private long postId;
     @DynamoDBAttribute
-    private String username;
+    private String content;
     @DynamoDBAttribute
     private List<String> tagList;
 }
