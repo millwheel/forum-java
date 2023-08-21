@@ -1,7 +1,9 @@
 package forum.main.service;
 
+import forum.main.dto.NotiMessageDto;
 import forum.main.entity.Post;
 import forum.main.entity.Tag;
+import forum.main.messaging.KafkaProducer;
 import forum.main.repository.SpringDataDynamoPostRepository;
 import forum.main.repository.SpringDataDynamoTagRepository;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,12 @@ public class PostService {
 
     private final SpringDataDynamoPostRepository postRepository;
     private final SpringDataDynamoTagRepository tagRepository;
+    private final KafkaProducer producer;
 
-    public PostService(SpringDataDynamoPostRepository repository, SpringDataDynamoTagRepository tagRepository) {
+    public PostService(SpringDataDynamoPostRepository repository, SpringDataDynamoTagRepository tagRepository, KafkaProducer producer) {
         this.postRepository = repository;
         this.tagRepository = tagRepository;
+        this.producer = producer;
     }
 
     public Long createPost(Long userId, String content, List<String> tagList){
@@ -28,6 +32,14 @@ public class PostService {
         Post save = postRepository.save(post);
         for (String tagName: tagList){
             Optional<Tag> tagOptional = tagRepository.findById(tagName);
+            if (tagOptional.isPresent()){
+                Tag tag = tagOptional.get();
+                List<Long> userList = tag.getUserList();
+                for (Long id: userList){
+                    NotiMessageDto notiMessageDto = new NotiMessageDto(id, tagName);
+                    producer.sendMessage(notiMessageDto);
+                }
+            }
         }
         return save.getPostId();
     }
