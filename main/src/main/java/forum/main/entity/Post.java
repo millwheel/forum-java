@@ -14,15 +14,15 @@ import java.util.List;
 public class Post {
 
     @DynamoDBHashKey
-    private long postId;
+    private Long postId;
     @DynamoDBAttribute
-    private long userId;
+    private Long userId;
     @DynamoDBAttribute
     private String content;
     @DynamoDBAttribute
     private List<String> tagList;
 
-    public Post(long postId, long userId, String content, List<String> tagList) {
+    public Post(Long postId, Long userId, String content, List<String> tagList) {
         this.postId = postId;
         this.userId = userId;
         this.content = content;

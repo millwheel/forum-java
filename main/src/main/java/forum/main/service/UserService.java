@@ -23,7 +23,7 @@ public class UserService {
 
     public long createUser(String username, List<String> tagList){
         SecureRandom secureRandom = new SecureRandom();
-        long userId = Integer.toUnsignedLong(secureRandom.nextInt());
+        Long userId = Integer.toUnsignedLong(secureRandom.nextInt());
         User user = new User(userId, username, tagList);
         User save = userRepository.save(user);
         for (String tagName: tagList){
@@ -43,7 +43,7 @@ public class UserService {
         return save.getUserId();
     }
 
-    public Optional<User> readUser(long id){
-        return userRepository.findById(id);
+    public Optional<User> readUser(Long userId){
+        return userRepository.findById(userId);
     }
 }

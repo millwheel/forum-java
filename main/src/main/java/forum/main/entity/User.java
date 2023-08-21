@@ -10,17 +10,19 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter
+@Setter
 @DynamoDBTable(tableName = "forum_user")
+@NoArgsConstructor
 public class User {
 
     @DynamoDBHashKey
-    private long userId;
+    private Long userId;
     @DynamoDBAttribute
     private String username;
     @DynamoDBAttribute
     private List<String> tagList;
 
-    public User(long userId, String username, List<String> tagList) {
+    public User(Long userId, String username, List<String> tagList) {
         this.userId = userId;
         this.username = username;
         this.tagList = tagList;

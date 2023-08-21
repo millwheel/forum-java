@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class PostResponseDto {
-    private long userId;
+    private Long userId;
     private String content;
     private List<String> tagList;
 

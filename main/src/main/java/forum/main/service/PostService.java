@@ -21,16 +21,13 @@ public class PostService {
         this.tagRepository = tagRepository;
     }
 
-    public long createPost(long userId, String content, List<String> tagList){
+    public long createPost(Long userId, String content, List<String> tagList){
         SecureRandom secureRandom = new SecureRandom();
-        int postId = secureRandom.nextInt();
+        Long postId = Integer.toUnsignedLong(secureRandom.nextInt());
         Post post = new Post(postId, userId, content, tagList);
         Post save = postRepository.save(post);
         for (String tagName: tagList){
             Optional<Tag> tagOptional = tagRepository.findById(tagName);
-            if (tagOptional.isPresent()){
-
-            }
         }
         return save.getPostId();
     }
