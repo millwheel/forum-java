@@ -17,14 +17,14 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping
-    public void createPost(@RequestBody PostRequestDto postRequestDto){
-        postService.createPost(postRequestDto.getUserId(), postRequestDto.getContent(), postRequestDto.getTagList());
-    }
-
     @GetMapping
-    public PostResponseDto getPost(@RequestParam long postId){
+    public PostResponseDto getPost(@RequestParam Long postId){
         Post post = postService.readPost(postId).orElse(null);
         return new PostResponseDto(post);
+    }
+
+    @PostMapping
+    public Long createPost(@RequestBody PostRequestDto postRequestDto){
+        return postService.createPost(postRequestDto.getUserId(), postRequestDto.getContent(), postRequestDto.getTagList());
     }
 }

@@ -21,7 +21,7 @@ public class PostService {
         this.tagRepository = tagRepository;
     }
 
-    public long createPost(Long userId, String content, List<String> tagList){
+    public Long createPost(Long userId, String content, List<String> tagList){
         SecureRandom secureRandom = new SecureRandom();
         Long postId = Integer.toUnsignedLong(secureRandom.nextInt());
         Post post = new Post(postId, userId, content, tagList);
@@ -32,7 +32,7 @@ public class PostService {
         return save.getPostId();
     }
 
-    public Optional<Post> readPost(long postId){
+    public Optional<Post> readPost(Long postId){
         return postRepository.findById(postId);
     }
 }

@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping
-    public long createUser(@RequestBody UserRequestDto userRequestDto){
+    public Long createUser(@RequestBody UserRequestDto userRequestDto){
         return userService.createUser(userRequestDto.getUsername(), userRequestDto.getKeywordList());
     }
 }
