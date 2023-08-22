@@ -18,15 +18,15 @@ public class Post {
     @DynamoDBHashKey
     private Long postId;
     @DynamoDBAttribute
-    private Long userId;
+    private Long writerId;
     @DynamoDBAttribute
     private String content;
     @DynamoDBAttribute
     private List<String> tagList;
 
-    public Post(Long postId, Long userId, String content, List<String> tagList) {
+    public Post(Long postId, Long writerId, String content, List<String> tagList) {
         this.postId = postId;
-        this.userId = userId;
+        this.writerId = writerId;
         this.content = content;
         this.tagList = tagList;
     }

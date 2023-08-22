@@ -33,7 +33,7 @@ public class KafkaProducer {
                int partition = result.getRecordMetadata().partition();
                long offset = result.getRecordMetadata().offset();
                NotiMessageDto sentNoti = (NotiMessageDto) result.getProducerRecord().value();
-               log.info("produced message topic={}, partition={}, offset={}, payload: userId={}, postId={}",
+               log.info("produced message topic={}, partition={}, offset={}, payload: writerId={}, postId={}",
                        topic, partition, offset, sentNoti.getUserId(), sentNoti.getPostId());
            } else{
                log.error("Error occurred while producing message: {}", e.getMessage());

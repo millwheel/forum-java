@@ -1,8 +1,9 @@
 package forum.main.service;
 
 import forum.main.dto.NotiMessageDto;
+import forum.main.entity.Notification;
 import forum.main.entity.Post;
-import forum.main.entity.Tag;
+import forum.main.repository.SpringDataRedisNotiRepository;
 import forum.main.service.messaging.KafkaProducer;
 import forum.main.repository.SpringDataDynamoPostRepository;
 import forum.main.repository.SpringDataDynamoTagRepository;
@@ -18,31 +19,33 @@ public class PostService {
 
     private final SpringDataDynamoPostRepository postRepository;
     private final SpringDataDynamoTagRepository tagRepository;
+    private final SpringDataRedisNotiRepository notiRepository;
     private final KafkaProducer producer;
 
-    public PostService(SpringDataDynamoPostRepository repository, SpringDataDynamoTagRepository tagRepository, KafkaProducer producer) {
+    public PostService(SpringDataDynamoPostRepository repository, SpringDataDynamoTagRepository tagRepository, SpringDataRedisNotiRepository notiRepository, KafkaProducer producer) {
         this.postRepository = repository;
         this.tagRepository = tagRepository;
+        this.notiRepository = notiRepository;
         this.producer = producer;
     }
 
-    public Long createPost(Long userId, String content, List<String> tagList){
+    public Long createPost(Long writerId, String content, List<String> tagList){
         SecureRandom secureRandom = new SecureRandom();
         Long postId = Integer.toUnsignedLong(secureRandom.nextInt());
-        Post post = new Post(postId, userId, content, tagList);
+        Post post = new Post(postId, writerId, content, tagList);
         Post save = postRepository.save(post);
         for (String tagName: tagList){
-            Optional<Tag> tagOptional = tagRepository.findById(tagName);
-            if (tagOptional.isPresent()){
-                Tag tag = tagOptional.get();
-                List<Long> userList = tag.getUserList();
-                for (Long id: userList){
-                    if (Objects.equals(id, userId)) continue;
-                    long messageCacheId = userId + postId;
-                    NotiMessageDto notiMessageDto = new NotiMessageDto(id, postId);
+            tagRepository.findById(tagName).ifPresent(tag -> {
+                List<Long> userIds = tag.getUserIds();
+                for (Long userId: userIds){
+                    if (Objects.equals(userId, writerId)) continue;
+                    Long messageCacheId = writerId + postId;
+                    if (notiRepository.existsById(messageCacheId)) continue;
+                    NotiMessageDto notiMessageDto = new NotiMessageDto(userId, postId);
+                    notiRepository.save(new Notification(messageCacheId));
                     producer.sendMessage(notiMessageDto);
                 }
-            }
+            });
         }
         return save.getPostId();
     }

@@ -18,10 +18,10 @@ public class Tag {
     @DynamoDBHashKey
     private String tagName;
     @DynamoDBAttribute
-    private List<Long> userList;
+    private List<Long> userIds;
 
-    public Tag(String tagName, List<Long> userList) {
+    public Tag(String tagName, List<Long> userIds) {
         this.tagName = tagName;
-        this.userList = userList;
+        this.userIds = userIds;
     }
 }

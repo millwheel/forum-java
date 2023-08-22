@@ -7,10 +7,10 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash(value = "notification", timeToLive = 300)
 public class Notification {
     @Id
-    private String notiId;
+    private Long notiId;
     private int value = 1;
 
-    public Notification(String notiId) {
+    public Notification(Long notiId) {
         this.notiId = notiId;
     }
 }
