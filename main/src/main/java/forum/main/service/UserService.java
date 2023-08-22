@@ -30,13 +30,13 @@ public class UserService {
             Optional<Tag> tagOptional = tagRepository.findById(tagName);
             if (tagOptional.isPresent()) {
                 Tag tag = tagOptional.get();
-                List<Long> userList = tag.getUserList();
-                userList.add(userId);
+                List<Long> userIds = tag.getUserIds();
+                userIds.add(userId);
                 tagRepository.save(tag);
             } else {
-                List<Long> userList = new ArrayList<>();
-                userList.add(userId);
-                Tag tag = new Tag(tagName, userList);
+                List<Long> userIds = new ArrayList<>();
+                userIds.add(userId);
+                Tag tag = new Tag(tagName, userIds);
                 tagRepository.save(tag);
             }
         }
