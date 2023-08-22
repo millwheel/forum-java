@@ -1,4 +1,4 @@
-package forum.main.messaging;
+package forum.main.service.messaging;
 
 import forum.main.dto.NotiMessageDto;
 import lombok.extern.slf4j.Slf4j;

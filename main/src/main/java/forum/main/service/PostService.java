@@ -3,7 +3,7 @@ package forum.main.service;
 import forum.main.dto.NotiMessageDto;
 import forum.main.entity.Post;
 import forum.main.entity.Tag;
-import forum.main.messaging.KafkaProducer;
+import forum.main.service.messaging.KafkaProducer;
 import forum.main.repository.SpringDataDynamoPostRepository;
 import forum.main.repository.SpringDataDynamoTagRepository;
 import org.springframework.stereotype.Service;
