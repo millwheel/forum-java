@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -36,7 +37,9 @@ public class PostService {
                 Tag tag = tagOptional.get();
                 List<Long> userList = tag.getUserList();
                 for (Long id: userList){
-                    NotiMessageDto notiMessageDto = new NotiMessageDto(id, tagName);
+                    if (Objects.equals(id, userId)) continue;
+                    long messageCacheId = userId + postId;
+                    NotiMessageDto notiMessageDto = new NotiMessageDto(id, postId);
                     producer.sendMessage(notiMessageDto);
                 }
             }

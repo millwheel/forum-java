@@ -1,7 +1,6 @@
 package forum.main.messaging;
 
 import forum.main.dto.NotiMessageDto;
-import forum.main.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -34,8 +33,8 @@ public class KafkaProducer {
                int partition = result.getRecordMetadata().partition();
                long offset = result.getRecordMetadata().offset();
                NotiMessageDto sentNoti = (NotiMessageDto) result.getProducerRecord().value();
-               log.info("produced message topic={}, partition={}, offset={}, payload: userId={}, tag={}",
-                       topic, partition, offset, sentNoti.getUserId(), sentNoti.getTag());
+               log.info("produced message topic={}, partition={}, offset={}, payload: userId={}, postId={}",
+                       topic, partition, offset, sentNoti.getUserId(), sentNoti.getPostId());
            } else{
                log.error("Error occurred while producing message: {}", e.getMessage());
            }

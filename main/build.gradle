@@ -23,6 +23,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
 	implementation 'org.apache.kafka:kafka-clients'
 	implementation 'org.springframework.kafka:spring-kafka'

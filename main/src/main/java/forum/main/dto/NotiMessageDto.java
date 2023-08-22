@@ -7,10 +7,10 @@ import lombok.Setter;
 @Setter
 public class NotiMessageDto {
     private Long userId;
-    private String tag;
+    private Long postId;
 
-    public NotiMessageDto(Long userId, String tag) {
+    public NotiMessageDto(Long userId, Long postId) {
         this.userId = userId;
-        this.tag = tag;
+        this.postId = postId;
     }
 }
