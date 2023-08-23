@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import forum.message.dto.NotiMessageDto;
 import forum.message.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
@@ -23,7 +22,7 @@ public class KafkaConsumer {
     }
 
     @KafkaListener(topics = "forum_notification", groupId = "notification_server")
-    public void listener(@Headers MessageHeaders messageHeaders, String message) {
+    public void listener(@Headers MessageHeaders messageHeaders, @Payload String message) {
         ObjectMapper objectMapper = new ObjectMapper();
         NotiMessageDto notiMessageDto;
         try {
@@ -31,10 +30,11 @@ public class KafkaConsumer {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        Long postId = notiMessageDto.getPostId();
         Long userId = notiMessageDto.getUserId();
+        Long postId = notiMessageDto.getPostId();
+        String title = notiMessageDto.getTitle();
         log.info("Received message: header={}, postId={}, userId={}", messageHeaders, postId, userId);
-        messageService.deduplicationMessage(postId, userId);
+        messageService.deduplicationMessage(postId, userId, title);
     }
 
 }

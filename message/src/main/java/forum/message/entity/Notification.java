@@ -8,9 +8,10 @@ import org.springframework.data.redis.core.RedisHash;
 public class Notification {
     @Id
     private Long notiId;
-    private int value = 1;
+    private String title;
 
-    public Notification(Long notiId) {
+    public Notification(Long notiId, String title) {
         this.notiId = notiId;
+        this.title = title;
     }
 }
