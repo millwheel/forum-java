@@ -2,17 +2,15 @@ package forum.message.service;
 
 import forum.message.entity.Notification;
 import forum.message.repository.SpringDataRedisRepository;
-import forum.message.service.messaging.KafkaConsumer;
+import forum.message.messaging.KafkaConsumer;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MessageService {
 
-    private final KafkaConsumer kafkaConsumer;
     private final SpringDataRedisRepository redisRepository;
 
-    public MessageService(KafkaConsumer kafkaConsumer, SpringDataRedisRepository redisRepository) {
-        this.kafkaConsumer = kafkaConsumer;
+    public MessageService(SpringDataRedisRepository redisRepository) {
         this.redisRepository = redisRepository;
     }
 

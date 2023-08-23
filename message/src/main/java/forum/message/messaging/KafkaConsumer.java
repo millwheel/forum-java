@@ -1,4 +1,4 @@
-package forum.message.service.messaging;
+package forum.message.messaging;
 
 import forum.message.dto.NotiMessageDto;
 import forum.message.service.MessageService;
