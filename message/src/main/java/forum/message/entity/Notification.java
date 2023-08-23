@@ -1,4 +1,4 @@
-package forum.main.entity;
+package forum.message.entity;
 
 
 import org.springframework.data.annotation.Id;
