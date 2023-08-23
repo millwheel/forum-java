@@ -8,9 +8,11 @@ import lombok.Setter;
 public class NotiMessageDto {
     private Long userId;
     private Long postId;
+    private String title;
 
-    public NotiMessageDto(Long userId, Long postId) {
+    public NotiMessageDto(Long userId, Long postId, String title) {
         this.userId = userId;
         this.postId = postId;
+        this.title = title;
     }
 }

@@ -27,10 +27,10 @@ public class PostService {
         this.producer = producer;
     }
 
-    public Long createPost(Long writerId, String content, List<String> tagList){
+    public Long createPost(Long writerId, String title, String content, List<String> tagList){
         SecureRandom secureRandom = new SecureRandom();
         Long postId = Integer.toUnsignedLong(secureRandom.nextInt());
-        Post post = new Post(postId, writerId, content, tagList);
+        Post post = new Post(postId, writerId, title, content, tagList);
         Post save = postRepository.save(post);
         for (String tagName: tagList){
             log.info("Tag name is {}", tagName);
@@ -38,7 +38,7 @@ public class PostService {
                 List<Long> userIds = tag.getUserIds();
                 for (Long userId: userIds){
                     if (Objects.equals(userId, writerId)) continue;
-                    NotiMessageDto notiMessageDto = new NotiMessageDto(userId, postId);
+                    NotiMessageDto notiMessageDto = new NotiMessageDto(userId, postId, title);
                     producer.sendMessage(notiMessageDto);
                 }
             });

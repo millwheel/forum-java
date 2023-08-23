@@ -25,6 +25,6 @@ public class PostController {
 
     @PostMapping
     public Long createPost(@RequestBody PostRequestDto postRequestDto){
-        return postService.createPost(postRequestDto.getUserId(), postRequestDto.getContent(), postRequestDto.getTagList());
+        return postService.createPost(postRequestDto.getUserId(), postRequestDto.getTitle(), postRequestDto.getContent(), postRequestDto.getTagList());
     }
 }

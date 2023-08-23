@@ -20,13 +20,16 @@ public class Post {
     @DynamoDBAttribute
     private Long writerId;
     @DynamoDBAttribute
+    private String title;
+    @DynamoDBAttribute
     private String content;
     @DynamoDBAttribute
     private List<String> tagList;
 
-    public Post(Long postId, Long writerId, String content, List<String> tagList) {
+    public Post(Long postId, Long writerId, String title, String content, List<String> tagList) {
         this.postId = postId;
         this.writerId = writerId;
+        this.title = title;
         this.content = content;
         this.tagList = tagList;
     }
