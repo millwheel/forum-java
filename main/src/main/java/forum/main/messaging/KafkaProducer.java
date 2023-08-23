@@ -1,5 +1,7 @@
 package forum.main.messaging;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import forum.main.dto.NotiMessageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,14 @@ public class KafkaProducer {
     }
 
     public void sendMessage(NotiMessageDto noti){
-        Message<NotiMessageDto> message = MessageBuilder.withPayload(noti).setHeader(KafkaHeaders.TOPIC, topic).build();
-
-        CompletableFuture<SendResult<Object, Object>> future = kafkaTemplate.send(message);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String notiString;
+        try {
+            notiString = objectMapper.writeValueAsString(noti);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        CompletableFuture<SendResult<Object, Object>> future = kafkaTemplate.send(topic, notiString);
         future.whenComplete((result, e) -> {
            if (e == null){
                int partition = result.getRecordMetadata().partition();

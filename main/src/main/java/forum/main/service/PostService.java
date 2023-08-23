@@ -2,7 +2,7 @@ package forum.main.service;
 
 import forum.main.dto.NotiMessageDto;
 import forum.main.entity.Post;
-import forum.main.service.messaging.KafkaProducer;
+import forum.main.messaging.KafkaProducer;
 import forum.main.repository.SpringDataDynamoPostRepository;
 import forum.main.repository.SpringDataDynamoTagRepository;
 import lombok.extern.slf4j.Slf4j;
