@@ -1,9 +1,7 @@
 package forum.main.service;
 
 import forum.main.dto.NotiMessageDto;
-import forum.main.entity.Notification;
 import forum.main.entity.Post;
-import forum.main.repository.SpringDataRedisNotiRepository;
 import forum.main.service.messaging.KafkaProducer;
 import forum.main.repository.SpringDataDynamoPostRepository;
 import forum.main.repository.SpringDataDynamoTagRepository;
@@ -21,13 +19,11 @@ public class PostService {
 
     private final SpringDataDynamoPostRepository postRepository;
     private final SpringDataDynamoTagRepository tagRepository;
-    private final SpringDataRedisNotiRepository notiRepository;
     private final KafkaProducer producer;
 
-    public PostService(SpringDataDynamoPostRepository repository, SpringDataDynamoTagRepository tagRepository, SpringDataRedisNotiRepository notiRepository, KafkaProducer producer) {
+    public PostService(SpringDataDynamoPostRepository repository, SpringDataDynamoTagRepository tagRepository, KafkaProducer producer) {
         this.postRepository = repository;
         this.tagRepository = tagRepository;
-        this.notiRepository = notiRepository;
         this.producer = producer;
     }
 
@@ -42,12 +38,7 @@ public class PostService {
                 List<Long> userIds = tag.getUserIds();
                 for (Long userId: userIds){
                     if (Objects.equals(userId, writerId)) continue;
-                    Long messageCacheId = userId + postId;
-                    log.info("check: Tag name={}, user id={}, post id={}", tagName, userId, postId);
-                    if (notiRepository.existsById(messageCacheId)) continue;
-                    log.info("confirmed: Tag name = {}, user id = {}, post id = {}", tagName, userId, postId);
                     NotiMessageDto notiMessageDto = new NotiMessageDto(userId, postId);
-                    notiRepository.save(new Notification(messageCacheId));
                     producer.sendMessage(notiMessageDto);
                 }
             });
