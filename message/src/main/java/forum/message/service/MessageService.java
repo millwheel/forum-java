@@ -2,7 +2,6 @@ package forum.message.service;
 
 import forum.message.entity.Notification;
 import forum.message.repository.SpringDataRedisRepository;
-import forum.message.messaging.KafkaConsumer;
 import org.springframework.stereotype.Service;
 
 @Service

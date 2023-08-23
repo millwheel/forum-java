@@ -1,5 +1,7 @@
 package forum.message.messaging;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import forum.message.dto.NotiMessageDto;
 import forum.message.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,14 @@ public class KafkaConsumer {
     }
 
     @KafkaListener(topics = "forum_notification", groupId = "notification_server")
-    public void listener(@Headers MessageHeaders messageHeaders, @Payload NotiMessageDto notiMessageDto, ConsumerRecord<?, ?> record) {
+    public void listener(@Headers MessageHeaders messageHeaders, String message) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        NotiMessageDto notiMessageDto;
+        try {
+            notiMessageDto = objectMapper.readValue(message, NotiMessageDto.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         Long postId = notiMessageDto.getPostId();
         Long userId = notiMessageDto.getUserId();
         log.info("Received message: header={}, postId={}, userId={}", messageHeaders, postId, userId);
