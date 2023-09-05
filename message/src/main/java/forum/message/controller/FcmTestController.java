@@ -16,7 +16,7 @@ public class FcmTestController {
 
     @PostMapping("/fcm")
     public void createMessage(@RequestBody TestMessageDto testMessageDto){
-        String response = firebaseService.sendNotification(testMessageDto);
-        log.info("response={}", response);
+//        String response = firebaseService.sendNotification(testMessageDto);
+//        log.info("response={}", response);
     }
 }
