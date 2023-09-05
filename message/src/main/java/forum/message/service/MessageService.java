@@ -23,25 +23,6 @@ public class MessageService {
         Notification notification = new Notification(messageId, title);
         log.info("Memorize user id={}, post id={}, post title={}", userId, postId, title);
         redisRepository.save(notification);
-
-    }
-
-    public void sendNotification() {
-        // This is just a basic example. You'd typically get the token from your database.
-        String registrationToken = "YOUR-TARGET-DEVICE-TOKEN";
-
-        Message message = Message.builder()
-                .putData("title", "Notification Title")
-                .putData("body", "Notification Body")
-                .setToken(registrationToken)
-                .build();
-
-        try {
-            String response = FirebaseMessaging.getInstance().send(message);
-            System.out.println("Sent message: " + response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }
