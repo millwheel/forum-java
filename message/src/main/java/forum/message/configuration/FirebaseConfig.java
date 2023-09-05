@@ -14,8 +14,8 @@ public class FirebaseConfig {
 
     @Value("${firebase.config.path}")
     private String firebaseConfigPath;
-    @Value("${firebase.config.project.name")
-    private String firebaseProjectName;
+    @Value("${firebase.config.project.id}")
+    private String firebaseProjectId;
 
     @PostConstruct
     public void initialize() {
@@ -24,7 +24,7 @@ public class FirebaseConfig {
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setProjectId(firebaseProjectName)
+                    .setProjectId(firebaseProjectId)
                     .build();
 
             if (FirebaseApp.getApps().isEmpty()) {

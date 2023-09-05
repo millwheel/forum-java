@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class DeduplicateMessageService {
+public class MessageService {
 
     private final SpringDataRedisRepository redisRepository;
 
-    public DeduplicateMessageService(SpringDataRedisRepository redisRepository) {
+    public MessageService(SpringDataRedisRepository redisRepository) {
         this.redisRepository = redisRepository;
     }
 
