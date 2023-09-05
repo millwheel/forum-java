@@ -27,14 +27,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Handle the data payload here.
         if(remoteMessage.getData().size() > 0) {
             String title = remoteMessage.getData().get("title");
-            String body = remoteMessage.getData().get("body");
 
             // Display the notification
-            showNotification(title, body);
+            showNotification(title);
         }
     }
 
-    private void showNotification(String title, String body) {
+    private void showNotification(String title) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "forum.example";
 
@@ -49,8 +48,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_launcher_foreground)  // replace with your app icon
-                .setContentTitle(title)
-                .setContentText(body)
+                .setContentTitle("A new post you might be interested in.")
+                .setContentText(title)
                 .setContentInfo("Info");
 
         notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
