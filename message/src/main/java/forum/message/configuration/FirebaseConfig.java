@@ -22,6 +22,7 @@ public class FirebaseConfig {
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setProjectId("forum-project-3ab7c")
                     .build();
 
             if (FirebaseApp.getApps().isEmpty()) {
