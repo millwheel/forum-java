@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -16,19 +17,16 @@ import java.util.Random;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
-    public void onNewToken(String token) {
+    public void onNewToken(@NonNull String token) {
         Log.d("FCM Log", "Refreshed token: " + token);
     }
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        // Handle the data payload here.
         if(remoteMessage.getData().size() > 0) {
             String title = remoteMessage.getData().get("title");
-
-            // Display the notification
             showNotification(title);
         }
     }
@@ -47,7 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationBuilder.setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.ic_launcher_foreground)  // replace with your app icon
+                .setSmallIcon(R.drawable.ic_launcher_foreground)  // default app icon. replace it later.
                 .setContentTitle("A new post you might be interested in.")
                 .setContentText(title)
                 .setContentInfo("Info");
