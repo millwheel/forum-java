@@ -7,7 +7,6 @@ import forum.main.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -22,12 +21,14 @@ public class UserController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public UserResponseDto getUser(@RequestParam Long userId){
         User user = userService.readUser(userId);
         return new UserResponseDto(user);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Long createUser(@RequestBody UserRequestDto userRequestDto){
         return userService.createUser(userRequestDto.getUsername(), userRequestDto.getKeywordList());
     }
