@@ -23,10 +23,7 @@ public class UserController {
 
     @GetMapping
     public UserResponseDto getUser(@RequestParam Long userId){
-        User user = userService.readUser(userId).orElse(null);
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        }
+        User user = userService.readUser(userId);
         return new UserResponseDto(user);
     }
 
