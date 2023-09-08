@@ -3,6 +3,7 @@ package forum.message.messaging;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import forum.message.dto.NotiMessageDto;
+import forum.message.entity.User;
 import forum.message.repository.SpringDataDynamoUserRepository;
 import forum.message.service.DeduplicationService;
 import forum.message.service.FirebaseService;
@@ -15,6 +16,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -39,7 +41,10 @@ public class KafkaConsumer {
         String title = notiMessageDto.getTitle();
         log.info("Received message: header={}, postId={}, userId={}", messageHeaders, postId, userId);
         if(deduplicationService.deduplicationMessage(postId, userId, title)){
-            firebaseService.sendNotification(title);
+            User user = userRepository.findById(userId).orElseThrow();
+            String token = user.getToken();
+            if (token.isEmpty()) return;
+            firebaseService.sendNotification(title, token);
         }
     }
 
