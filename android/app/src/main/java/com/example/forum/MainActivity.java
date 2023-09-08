@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 URL url = new URL("localhost:3500");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestMethod("PUT");
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpURLConnection.setDoOutput(true);
 
