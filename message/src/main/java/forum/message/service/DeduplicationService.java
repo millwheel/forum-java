@@ -1,7 +1,7 @@
 package forum.message.service;
 
 import forum.message.entity.Notification;
-import forum.message.repository.SpringDataRedisRepository;
+import forum.message.redis.SpringDataRedisRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

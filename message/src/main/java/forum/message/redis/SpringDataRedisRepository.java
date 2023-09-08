@@ -1,4 +1,4 @@
-package forum.message.repository;
+package forum.message.redis;
 
 import forum.message.entity.Notification;
 import org.springframework.data.repository.CrudRepository;
