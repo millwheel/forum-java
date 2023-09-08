@@ -1,5 +1,6 @@
 package forum.main.controller;
 
+import forum.main.dto.TokenRequestDto;
 import forum.main.dto.UserRequestDto;
 import forum.main.dto.UserResponseDto;
 import forum.main.entity.User;
@@ -31,5 +32,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public Long createUser(@RequestBody UserRequestDto userRequestDto){
         return userService.createUser(userRequestDto.getUsername(), userRequestDto.getKeywordList());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public String addDeviceToken(@RequestBody TokenRequestDto tokenRequestDto){
+        return userService.addToken(tokenRequestDto.getUserId(), tokenRequestDto.getToken());
     }
 }

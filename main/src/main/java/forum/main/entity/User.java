@@ -21,6 +21,8 @@ public class User {
     private String username;
     @DynamoDBAttribute
     private List<String> tagList;
+    @DynamoDBAttribute
+    private String token;
 
     public User(Long userId, String username, List<String> tagList) {
         this.userId = userId;

@@ -68,4 +68,10 @@ public class UserService {
     public User readUser(Long userId){
         return userRepository.findById(userId).orElseThrow();
     }
+
+    public String addToken(Long userId, String token){
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setToken(token);
+        return userRepository.save(user).getToken();
+    }
 }

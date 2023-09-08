@@ -8,9 +8,8 @@ import java.util.List;
 public class UserRequestDto {
     private String username;
     private List<String> keywordList;
-
-    public UserRequestDto(String username, List<String> keywordList) {
-        this.username = username;
-        this.keywordList = keywordList;
-    }
 }
+
+
+
+
