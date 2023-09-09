@@ -34,7 +34,7 @@ public class UserController {
         return userService.createUser(userRequestDto.getUsername(), userRequestDto.getKeywordList());
     }
 
-    @PostMapping
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public String addDeviceToken(@RequestBody TokenRequestDto tokenRequestDto){
         return userService.addToken(tokenRequestDto.getUserId(), tokenRequestDto.getToken());
