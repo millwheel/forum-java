@@ -46,14 +46,14 @@ public class MainActivity extends AppCompatActivity {
     private void sendTokenToServer(String token) {
         new Thread(() -> {
             try {
-                URL url = new URL("localhost:3500");
+                URL url = new URL("http://3.34.141.49/user");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("PUT");
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpURLConnection.setDoOutput(true);
 
                 JSONObject jsonParam = new JSONObject();
-                jsonParam.put("userId", 16940821101711020L);
+                jsonParam.put("userId", 16944260006021550L);
                 jsonParam.put("token", token);
 
                 DataOutputStream out = new DataOutputStream(httpURLConnection.getOutputStream());
