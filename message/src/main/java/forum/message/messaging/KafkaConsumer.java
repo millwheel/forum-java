@@ -43,7 +43,9 @@ public class KafkaConsumer {
                     .orElseThrow(() -> new RuntimeException("User with ID: " + userId + " not found"));
             String token = user.getToken();
             if (token == null) return;
-            firebaseService.sendNotification(title, token);
+            log.info("token={}", token);
+            String response = firebaseService.sendNotification(title, token);
+            log.info("Notification response:{}", response);
         }
     }
 
