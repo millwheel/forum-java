@@ -39,9 +39,10 @@ public class KafkaConsumer {
         String title = notiMessageDto.getTitle();
         log.info("Received message: header={}, postId={}, userId={}", messageHeaders, postId, userId);
         if(deduplicationService.deduplicationMessage(postId, userId, title)){
-            User user = userRepository.findById(userId).orElseThrow();
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User with ID: " + userId + " not found"));
             String token = user.getToken();
-            if (token.isEmpty()) return;
+            if (token == null) return;
             firebaseService.sendNotification(title, token);
         }
     }
