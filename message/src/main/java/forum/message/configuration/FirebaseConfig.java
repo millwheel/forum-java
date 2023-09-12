@@ -33,8 +33,9 @@ public class FirebaseConfig {
             } else {
                 // Treat as the JSON content itself
                 JSONObject json = new JSONObject(firebaseConfig);
-                String firebaseConfigContent = json.getString("firebase_config");
-                serviceAccount = new ByteArrayInputStream(firebaseConfigContent.getBytes(StandardCharsets.UTF_8));
+                JSONObject firebaseConfigJson = json.getJSONObject("firebase_config");
+                String firebaseConfigString = firebaseConfigJson.toString();
+                serviceAccount = new ByteArrayInputStream(firebaseConfigString.getBytes(StandardCharsets.UTF_8));
             }
 
             FirebaseOptions options = new FirebaseOptions.Builder()
