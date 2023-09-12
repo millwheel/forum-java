@@ -13,6 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.stereotype.Repository;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 
 @Configuration
 @EnableDynamoDBRepositories(basePackages = "forum.message.repository", includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Repository.class))
@@ -39,4 +42,11 @@ public class AwsConfig {
                 .withRegion(awsRegion).build();
     }
 
+    @Bean
+    public SecretsManagerClient secretsManagerClient() {
+        return SecretsManagerClient.builder()
+                .credentialsProvider((AwsCredentialsProvider) awsCredentialsProvider())
+                .region(Region.of(awsRegion))
+                .build();
+    }
 }
