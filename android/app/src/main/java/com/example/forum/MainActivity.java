@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendTokenToServer(String token) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://3.34.141.49/user");
+                URL url = new URL("http://43.202.56.125/user");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("PUT");
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
