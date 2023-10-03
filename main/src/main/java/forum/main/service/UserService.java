@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -43,7 +45,7 @@ public class UserService {
         return save.getUserId();
     }
 
-    public long createUserId() {
+    private long createUserId() {
         String currentTime = Long.toString(System.currentTimeMillis());
         String hostAddress = null;
         try {
@@ -67,6 +69,12 @@ public class UserService {
 
     public User readUser(Long userId){
         return userRepository.findById(userId).orElseThrow();
+    }
+
+    public List<User> readUsers(){
+        Iterable<User> all = userRepository.findAll();
+        return StreamSupport.stream(all.spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public String addToken(Long userId, String token){

@@ -18,9 +18,9 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping
+    @GetMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
-    public PostResponseDto getPost(@RequestParam Long postId){
+    public PostResponseDto getPost(@PathVariable(name = "postId") Long postId){
         Post post = postService.readPost(postId).orElse(null);
         return new PostResponseDto(post);
     }
